@@ -4,7 +4,7 @@ import Article from "../components/article";
 import Pagination from "../components/pagination";
 import Sidebar from "../components/sidebar";
 import Layout from "../components/layout";
-import Menu from '../data-dummy/menu.json';
+// import Menu from '../data-dummy/menu.json';
 import Post from '../data-dummy/post.json';
 
 export default function Home({ props }) {
@@ -16,9 +16,8 @@ export default function Home({ props }) {
             <h3 className="pb-4 mb-4 fst-italic border-bottom">
               From the Firehose
             </h3>
-            {
-              props.post.map(
-                p => (
+            { 
+              props.post.map(p => (
                   <Article key={p.id} post = {p}/>
                 )
               )
@@ -31,10 +30,13 @@ export default function Home({ props }) {
   );
 }
 
-Home.getInitialProps = () => {
+Home.getInitialProps = async() => {
+  const req = await fetch('http://localhost:3000/api/hello')
+  const res = await req.json()
+  console.log(Post)
   return {
     props : {
-      menu : Menu,
+      menu : res,
       post : Post
     }
   }
